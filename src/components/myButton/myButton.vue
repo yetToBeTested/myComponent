@@ -1,98 +1,178 @@
 <template>
-  <button :class="typeColor" type="button">
-    <i v-if="props.left"></i>
-    <i v-else-if="props.rigt"></i>
-    <span class><slot /></span>
+  <button
+    class="my-button"
+    :class="[type, textOutline, text, outline, disabled, disabledText, disabledOutline, size]"
+    @click="handleClick"
+  >
+    <el-icon v-if="icon">
+      <component :is="icon" />
+    </el-icon>
+    <span><slot></slot></span>
   </button>
 </template>
 
 <script setup lang="ts">
 import { computed } from 'vue'
 
-interface IProps {
-  type?: string
-  left?: string
-  rigt?: string
-}
-
-const props = withDefaults(defineProps<IProps>(), {
-  type: 'default',
-  left: '',
-  rigt: ''
+const props = defineProps({
+  type: String,
+  text: Boolean,
+  outline: Boolean,
+  disabled: Boolean,
+  size: String,
+  icon: String
 })
-// border bg-[#409EFF]
-const colorMap = new Map()
-  .set('default', 'my-button')
-  .set('primary', 'my-button my-button--primary')
-  .set('success', 'border bg-[#67C23A]')
-  .set('info', 'border bg-[#909399]')
-  .set('warning', 'border bg-[#E6A23C]')
-  .set('danger', 'border bg-[#F56C6C]')
 
-const typeColor = computed(() => colorMap.get(props.type))
+const emit = defineEmits(['click'])
+
+const type = computed(() => (props.type ? `my-button--${props.type} text-color` : ''))
+const textOutline = computed(() => (props.text || props.outline ? `my-button--outline ` : ''))
+const text: any = computed(() =>
+  props.type && props.text && !props.outline
+    ? `my-button--${props.type}--color my-button--color`
+    : ''
+)
+const outline: any = computed(() =>
+  props.type && props.outline && props.text ? `my-button--${props.type}--color` : ''
+)
+
+const disabled: any = computed(() =>
+  props.disabled && props.outline && props.text ? 'my-button--disabled' : ''
+)
+const disabledText = computed(() =>
+  props.disabled && props.text && !props.outline ? 'my-button--disabled--text' : ''
+)
+
+const disabledOutline = computed(() =>
+  props.disabled && !props.text && !props.outline ? 'my-button--disabled--outline' : ''
+)
+
+const size = computed(() => {
+  switch (props.size) {
+    case 'medium':
+      return 'my-button--medium'
+    case 'small':
+      return 'my-button--small'
+    case 'mini':
+      return 'my-button--mini'
+    default:
+      return 'my-button--medium'
+  }
+})
+
+const icon = computed(() => props.icon ?? '')
+
+function handleClick(evt: any) {
+  emit('click', evt)
+}
 </script>
 
 <style scoped lang="less">
 .my-button {
   display: inline-flex;
+  /* 设置宽度自适应 */
+  width: auto;
+  height: 35px;
+  /* 将按钮左右边距调大一些显得美观 */
+  padding: 0 10px;
+  /* 居中 */
+  text-align: center;
   justify-content: center;
   align-items: center;
-  line-height: 1;
-  height: 32px;
-  white-space: nowrap;
+  /* 边框不显示 */
+  border: none;
+  /* 圆角框 */
+  border-radius: 3px;
+  /* 盒子阴影 */
+  box-shadow: 0px 0px 3px gray;
+  font-family: inherit;
+  /* 鼠标变为小手标识 */
   cursor: pointer;
-  color: var(--el-button-text-color);
-  text-align: center;
-  box-sizing: border-box;
-  outline: 0;
-  transition: 0.1s;
-  font-weight: var(--el-button-font-weight);
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  vertical-align: middle;
-  // -webkit-appearance: none;
-  background-color: var(--el-button-bg-color);
-  border: var(--el-border);
-  border-color: var(--el-button-border-color);
-  padding: 8px 15px;
-  font-size: var(--el-font-size-base);
-  border-radius: var(--el-border-radius-base);
+  font-size: 14px;
 }
-// .my-button {
-//   --el-button-font-weight: var(--el-font-weight-primary);
-//   --el-button-border-color: var(--el-border-color);
-//   --el-button-bg-color: var(--el-fill-color-blank);
-//   --el-button-text-color: var(--el-text-color-regular);
-//   --el-button-disabled-text-color: var(--el-disabled-text-color);
-//   --el-button-disabled-bg-color: var(--el-fill-color-blank);
-//   --el-button-disabled-border-color: var(--el-border-color-light);
-//   --el-button-divide-border-color: rgba(255, 255, 255, 0.5);
-//   --el-button-hover-text-color: var(--el-color-primary);
-//   --el-button-hover-bg-color: var(--el-color-primary-light-9);
-//   --el-button-hover-border-color: var(--el-color-primary-light-7);
-//   --el-button-active-text-color: var(--el-button-hover-text-color);
-//   --el-button-active-border-color: var(--el-color-primary);
-//   --el-button-active-bg-color: var(--el-button-hover-bg-color);
-//   --el-button-outline-color: var(--el-color-primary-light-5);
-//   --el-button-hover-link-text-color: var(--el-color-info);
-//   --el-button-active-color: var(--el-text-color-primary);
-// }
+
 .my-button--primary {
-  --el-button-text-color: var(--el-color-white);
-  --el-button-bg-color: var(--el-color-primary);
-  --el-button-border-color: var(--el-color-primary);
-  --el-button-outline-color: var(--el-color-primary-light-5);
-  --el-button-active-color: var(--el-color-primary-dark-2);
-  --el-button-hover-text-color: var(--el-color-white);
-  --el-button-hover-link-text-color: var(--el-color-primary-light-5);
-  --el-button-hover-bg-color: var(--el-color-primary-light-3);
-  --el-button-hover-border-color: var(--el-color-primary-light-3);
-  --el-button-active-bg-color: var(--el-color-primary-dark-2);
-  --el-button-active-border-color: var(--el-color-primary-dark-2);
-  --el-button-disabled-text-color: var(--el-color-white);
-  --el-button-disabled-bg-color: var(--el-color-primary-light-5);
-  --el-button-disabled-border-color: var(--el-color-primary-light-5);
+  background-color: rgb(74, 130, 212);
+}
+.my-button--info {
+  background-color: rgb(163, 191, 233);
+}
+.my-button--success {
+  background-color: rgb(92, 218, 180);
+}
+.my-button--warning {
+  background-color: rgb(221, 219, 77);
+}
+.my-button--danger {
+  background-color: rgb(233, 56, 56);
+}
+.text-color {
+  color: #000;
+}
+
+.my-button--primary--color {
+  color: rgb(74, 130, 212);
+  border: 1px solid rgb(74, 130, 212);
+}
+.my-button--info--color {
+  color: rgb(163, 191, 233);
+  border: 1px solid rgb(163, 191, 233);
+}
+.my-button--success--color {
+  color: rgb(92, 218, 180);
+  border: 1px solid rgb(92, 218, 180);
+}
+.my-button--warning--color {
+  color: rgb(221, 219, 77);
+  border: 1px solid rgb(221, 219, 77);
+}
+.my-button--danger--color {
+  color: rgb(233, 56, 56);
+  border: 1px solid rgb(233, 56, 56);
+}
+.my-button--color {
+  border: none;
+  box-shadow: none;
+}
+
+.my-button--outline {
+  background-color: #fff;
+}
+
+.my-button--disabled {
+  color: gray;
+  /* 鼠标变为禁用 */
+  cursor: no-drop;
+}
+.my-button--disabled--outline {
+  color: gray;
+  cursor: no-drop;
+  border: 1px solid gray;
+}
+.my-button--disabled--text {
+  color: gray;
+  cursor: no-drop;
+  border: none;
+  box-shadow: none;
+}
+
+.my-button--medium {
+  padding: 10px 20px;
+  font-size: 14px;
+  border-radius: 4px;
+}
+
+.my-button--small {
+  height: 24px;
+  padding: 9px 15px;
+  font-size: 12px;
+  border-radius: 3px;
+}
+
+.my-button--mini {
+  height: 12px;
+  padding: 7px 10px;
+  font-size: 12px;
+  border-radius: 3px;
 }
 </style>
