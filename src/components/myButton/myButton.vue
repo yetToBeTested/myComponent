@@ -1,12 +1,11 @@
 <template>
-  <button
-    class="my-button"
-    :class="[type, textOutline, text, outline, disabled, disabledText, disabledOutline, size]"
-    @click="handleClick"
-  >
-    <el-icon v-if="icon">
+  <button class="my-button" :class="[type, plain, round, circle]" type="button">
+    <i class="el-icon-loading" v-if="loading"></i>
+    <el-icon v-else-if="icon">
       <component :is="icon" />
     </el-icon>
+    <i class="el-icon-loading" v-if="loading"></i>
+    <!-- <i :class="icon" v-if="icon && !loading"></i> -->
     <span><slot></slot></span>
   </button>
 </template>
@@ -16,60 +15,72 @@ import { computed } from 'vue'
 
 const props = defineProps({
   type: String,
-  text: Boolean,
+  plain: Boolean,
+  round: Boolean,
+  circle: Boolean,
+  icon: String,
+  loading: String,
   outline: Boolean,
   disabled: Boolean,
-  size: String,
-  icon: String
+  size: String
 })
 
-const emit = defineEmits(['click'])
+// const emit = defineEmits(['click'])
 
-const type = computed(() => (props.type ? `my-button--${props.type} text-color` : ''))
-const textOutline = computed(() => (props.text || props.outline ? `my-button--outline ` : ''))
-const text: any = computed(() =>
-  props.type && props.text && !props.outline
-    ? `my-button--${props.type}--color my-button--color`
-    : ''
-)
-const outline: any = computed(() =>
-  props.type && props.outline && props.text ? `my-button--${props.type}--color` : ''
-)
+const type: any = computed(() => (props.type ? `my-button--${props.type}` : ''))
+const plain: any = computed(() => (props.plain ? 'plain' : ''))
+const round: any = computed(() => (props.round ? 'round' : ''))
+const circle: any = computed(() => (props.circle ? 'circle' : ''))
+const loading: any = computed(() => (props.loading ? 'loading' : ''))
+console.log(props.icon)
 
-const disabled: any = computed(() =>
-  props.disabled && props.outline && props.text ? 'my-button--disabled' : ''
-)
-const disabledText = computed(() =>
-  props.disabled && props.text && !props.outline ? 'my-button--disabled--text' : ''
-)
+// const textOutline = computed(() => (props.text || props.outline ? `my-button--outline ` : ''))
+// const text: any = computed(() => {
+//   if (props.outline || !props.text) {
+//     return ''
+//   } else {
+//     return (props.type ? `my-button--${props.type}--color ` : '') + 'my-button--color'
+//   }
+// })
+// const outline: any = computed(() =>
+//   props.type && props.outline && props.text ? `my-button--${props.type}--color` : ''
+// )
 
-const disabledOutline = computed(() =>
-  props.disabled && !props.text && !props.outline ? 'my-button--disabled--outline' : ''
-)
+// const disabled: any = computed(() =>
+//   props.disabled && props.outline && props.text ? 'my-button--disabled' : ''
+// )
+// const disabledText = computed(() =>
+//   props.disabled && props.text && !props.outline ? 'my-button--disabled--text' : ''
+// )
 
-const size = computed(() => {
-  switch (props.size) {
-    case 'medium':
-      return 'my-button--medium'
-    case 'small':
-      return 'my-button--small'
-    case 'mini':
-      return 'my-button--mini'
-    default:
-      return 'my-button--medium'
-  }
-})
+// const disabledOutline = computed(() =>
+//   props.disabled && !props.text && !props.outline ? 'my-button--disabled--outline' : ''
+// )
 
-const icon = computed(() => props.icon ?? '')
+// const size = computed(() => {
+//   switch (props.size) {
+//     case 'large':
+//       return 'my-button--large'
+//     case 'small':
+//       return 'my-button--small'
+//     default:
+//       return ''
+//   }
+// })
 
-function handleClick(evt: any) {
-  emit('click', evt)
-}
+// const icon = computed(() => props.icon ?? '')
+
+// function handleClick(evt: any) {
+//   emit('click', evt)
+// }
 </script>
 
 <style scoped lang="less">
 .my-button {
   display: inline-flex;
+  line-height: 1px;
+  vertical-align: middle;
+  // box-sizing: border-box;
   /* 设置宽度自适应 */
   width: auto;
   height: 35px;
@@ -88,91 +99,152 @@ function handleClick(evt: any) {
   font-family: inherit;
   /* 鼠标变为小手标识 */
   cursor: pointer;
+  color: #606266;
+  box-sizing: border-box;
   font-size: 14px;
+  span {
+    display: inline-flex;
+    align-items: center;
+  }
 }
-
-.my-button--primary {
-  background-color: rgb(74, 130, 212);
-}
-.my-button--info {
-  background-color: rgb(163, 191, 233);
-}
-.my-button--success {
-  background-color: rgb(92, 218, 180);
-}
-.my-button--warning {
-  background-color: rgb(221, 219, 77);
-}
-.my-button--danger {
-  background-color: rgb(233, 56, 56);
-}
-.text-color {
-  color: #000;
-}
-
-.my-button--primary--color {
-  color: rgb(74, 130, 212);
-  border: 1px solid rgb(74, 130, 212);
-}
-.my-button--info--color {
-  color: rgb(163, 191, 233);
-  border: 1px solid rgb(163, 191, 233);
-}
-.my-button--success--color {
-  color: rgb(92, 218, 180);
-  border: 1px solid rgb(92, 218, 180);
-}
-.my-button--warning--color {
-  color: rgb(221, 219, 77);
-  border: 1px solid rgb(221, 219, 77);
-}
-.my-button--danger--color {
-  color: rgb(233, 56, 56);
-  border: 1px solid rgb(233, 56, 56);
-}
-.my-button--color {
-  border: none;
-  box-shadow: none;
-}
-
-.my-button--outline {
+.my-button.plain {
+  // color: #409eff;
   background-color: #fff;
 }
 
-.my-button--disabled {
-  color: gray;
-  /* 鼠标变为禁用 */
-  cursor: no-drop;
+.my-button.round {
+  border-radius: 20px;
+  padding: 8px 15px;
 }
-.my-button--disabled--outline {
-  color: gray;
-  cursor: no-drop;
-  border: 1px solid gray;
+.my-button.circle {
+  border-radius: 50%;
+  padding: 8px;
 }
-.my-button--disabled--text {
-  color: gray;
-  cursor: no-drop;
-  border: none;
-  box-shadow: none;
+.my-button + .my-button {
+  margin-left: 12px;
 }
 
-.my-button--medium {
-  padding: 10px 20px;
-  font-size: 14px;
-  border-radius: 4px;
+.my-button--primary {
+  color: #fff;
+  background-color: #409eff;
+}
+.my-button--primary.plain {
+  color: #409eff;
+  background-color: #ecf5ff;
+}
+.my-button--info {
+  color: #fff;
+  background-color: rgb(163, 191, 233);
+}
+.my-button--info.plain {
+  color: #909399;
+  background-color: #f4f4f5;
+}
+.my-button--success {
+  color: #fff;
+  background-color: rgb(92, 218, 180);
+}
+.my-button--success.plain {
+  color: #67c23a;
+  background-color: #f0f9eb;
+}
+.my-button--warning {
+  color: #fff;
+  background-color: rgb(221, 219, 77);
+}
+.my-button--warning.plain {
+  color: #e6a23c;
+  background-color: #fdf6ec;
+}
+.my-button--danger {
+  color: #fff;
+  background-color: rgb(233, 56, 56);
+}
+.my-button--danger.plain {
+  color: #f56c6c;
+  background-color: #fef0f0;
 }
 
-.my-button--small {
-  height: 24px;
-  padding: 9px 15px;
-  font-size: 12px;
-  border-radius: 3px;
-}
+// .my-button--primary {
+//   background-color: #409eff;
+// }
+// .my-button--info {
+//   background-color: rgb(163, 191, 233);
+// }
+// .my-button--success {
+//   background-color: rgb(92, 218, 180);
+// }
+// .my-button--warning {
+//   background-color: rgb(221, 219, 77);
+// }
+// .my-button--danger {
+//   background-color: rgb(233, 56, 56);
+// }
+// .text-color {
+//   color: #fff;
+// }
 
-.my-button--mini {
-  height: 12px;
-  padding: 7px 10px;
-  font-size: 12px;
-  border-radius: 3px;
-}
+// .my-button--primary--color {
+//   color: #409eff;
+//   border: 1px solid rgb(74, 130, 212);
+// }
+// .my-button--info--color {
+//   color: rgb(163, 191, 233);
+//   border: 1px solid rgb(163, 191, 233);
+// }
+// .my-button--success--color {
+//   color: rgb(92, 218, 180);
+//   border: 1px solid rgb(92, 218, 180);
+// }
+// .my-button--warning--color {
+//   color: rgb(221, 219, 77);
+//   border: 1px solid rgb(221, 219, 77);
+// }
+// .my-button--danger--color {
+//   color: rgb(233, 56, 56);
+//   border: 1px solid rgb(233, 56, 56);
+// }
+// .my-button--color {
+//   border: none;
+//   box-shadow: none;
+// }
+
+// .my-button--outline {
+//   background-color: #fff;
+// }
+
+// .my-button--disabled {
+//   color: #fff;
+//   background-color: #a0cfff;
+//   border-color: #a0cfff;
+//   /* 鼠标变为禁用 */
+//   cursor: no-drop;
+// }
+// .my-button--disabled--outline {
+//   color: gray;
+//   cursor: no-drop;
+//   border: 1px solid gray;
+// }
+// .my-button--disabled--text {
+//   color: #a0cfff;
+//   // background-color: #a0cfff;
+//   // border-color: #a0cfff;
+//   cursor: no-drop;
+//   border: none;
+//   box-shadow: none;
+// }
+
+// .my-button--large {
+//   height: 40px;
+//   padding: 10px 20px;
+//   font-size: 14px;
+//   border-radius: 4px;
+// }
+
+// .my-button--small {
+//   height: 24px;
+//   padding: 5px 12px;
+//   font-size: 12px;
+//   border-radius: 3px;
+// }
 </style>
