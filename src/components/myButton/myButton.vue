@@ -1,25 +1,42 @@
 <template>
-  <button class="my-button" :class="[type, plain, round, circle]" type="button">
-    <i class="el-icon-loading" v-if="loading"></i>
+  <button
+    class="my-button"
+    :class="[type, plain, round, circle, disabled]"
+    type="button"
+    ref="btn"
+    :disabled="props.disabled"
+  >
+    <!-- <i class="el-icon-loading" v-if="loading"></i>
     <el-icon v-else-if="icon">
       <component :is="icon" />
-    </el-icon>
-    <i class="el-icon-loading" v-if="loading"></i>
+    </el-icon> -->
+    <!-- <i class="el-icon-loading" v-if="loading"></i> -->
     <!-- <i :class="icon" v-if="icon && !loading"></i> -->
+    <template v-if="loading">
+      <slot v-if="$slots.loading" name="loading" />
+      <el-icon v-else :class="loading">
+        <component :is="loadingIcon" />
+      </el-icon>
+    </template>
+    <el-icon v-else-if="icon || $slots.icon">
+      <component :is="icon" v-if="icon" />
+      <slot v-else name="icon" />
+    </el-icon>
     <span><slot></slot></span>
   </button>
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
-
+import { computed, ref } from 'vue'
+const btn = ref()
 const props = defineProps({
   type: String,
   plain: Boolean,
   round: Boolean,
   circle: Boolean,
   icon: String,
-  loading: String,
+  loading: Boolean,
+  loadingIcon: String,
   outline: Boolean,
   disabled: Boolean,
   size: String
@@ -32,7 +49,9 @@ const plain: any = computed(() => (props.plain ? 'plain' : ''))
 const round: any = computed(() => (props.round ? 'round' : ''))
 const circle: any = computed(() => (props.circle ? 'circle' : ''))
 const loading: any = computed(() => (props.loading ? 'loading' : ''))
-console.log(props.icon)
+const loadingIcon: any = computed(() => (props.loadingIcon ? props.loadingIcon : 'Loading'))
+const disabled: any = computed(() => (props.disabled ? 'disabled' : ''))
+console.log(props.icon, props.loadingIcon)
 
 // const textOutline = computed(() => (props.text || props.outline ? `my-button--outline ` : ''))
 // const text: any = computed(() => {
@@ -120,6 +139,13 @@ console.log(props.icon)
   border-radius: 50%;
   padding: 8px;
 }
+.my-button.disabled {
+  color: #fff;
+  background-color: #a0cfff;
+  border-color: #a0cfff;
+  /* 鼠标变为禁用 */
+  cursor: no-drop;
+}
 .my-button + .my-button {
   margin-left: 12px;
 }
@@ -163,6 +189,10 @@ console.log(props.icon)
 .my-button--danger.plain {
   color: #f56c6c;
   background-color: #fef0f0;
+}
+
+.el-icon.loading {
+  animation: rotating 2s linear infinite;
 }
 
 // .my-button--primary {
