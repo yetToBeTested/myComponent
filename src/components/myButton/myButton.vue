@@ -118,13 +118,38 @@ console.log(props.icon, props.loadingIcon)
   font-family: inherit;
   /* 鼠标变为小手标识 */
   cursor: pointer;
-  color: #606266;
+  color: var(--el-button-text-color);
+  background-color: var(--el-button-bg-color);
+  border: var(--el-border);
+  border-color: var(--el-button-border-color);
+  padding: 8px 15px;
+  font-size: var(--el-font-size-base);
+  border-radius: var(--el-border-radius-base);
   box-sizing: border-box;
-  font-size: 14px;
+  font-size: var(--el-font-size-base);
   span {
     display: inline-flex;
     align-items: center;
   }
+}
+.my-button {
+  --el-button-font-weight: var(--el-font-weight-primary);
+  --el-button-border-color: var(--el-border-color);
+  --el-button-bg-color: var(--el-fill-color-blank);
+  --el-button-text-color: var(--el-text-color-regular);
+  --el-button-disabled-text-color: var(--el-disabled-text-color);
+  --el-button-disabled-bg-color: var(--el-fill-color-blank);
+  --el-button-disabled-border-color: var(--el-border-color-light);
+  --el-button-divide-border-color: rgba(255, 255, 255, 0.5);
+  --el-button-hover-text-color: var(--el-color-primary);
+  --el-button-hover-bg-color: var(--el-color-primary-light-9);
+  --el-button-hover-border-color: var(--el-color-primary-light-7);
+  --el-button-active-text-color: var(--el-button-hover-text-color);
+  --el-button-active-border-color: var(--el-color-primary);
+  --el-button-active-bg-color: var(--el-button-hover-bg-color);
+  --el-button-outline-color: var(--el-color-primary-light-5);
+  --el-button-hover-link-text-color: var(--el-color-info);
+  --el-button-active-color: var(--el-text-color-primary);
 }
 .my-button.plain {
   // color: #409eff;
@@ -140,9 +165,9 @@ console.log(props.icon, props.loadingIcon)
   padding: 8px;
 }
 .my-button.disabled {
-  color: #fff;
-  background-color: #a0cfff;
-  border-color: #a0cfff;
+  color: var(--el-button-disabled-text-color);
+  background-color: var(--el-button-disabled-bg-color);
+  border-color: var(--el-button-disabled-border-color);
   /* 鼠标变为禁用 */
   cursor: no-drop;
 }
@@ -151,8 +176,20 @@ console.log(props.icon, props.loadingIcon)
 }
 
 .my-button--primary {
-  color: #fff;
-  background-color: #409eff;
+  --el-button-text-color: var(--el-color-white);
+  --el-button-bg-color: var(--el-color-primary);
+  --el-button-border-color: var(--el-color-primary);
+  --el-button-outline-color: var(--el-color-primary-light-5);
+  --el-button-active-color: var(--el-color-primary-dark-2);
+  --el-button-hover-text-color: var(--el-color-white);
+  --el-button-hover-link-text-color: var(--el-color-primary-light-5);
+  --el-button-hover-bg-color: var(--el-color-primary-light-3);
+  --el-button-hover-border-color: var(--el-color-primary-light-3);
+  --el-button-active-bg-color: var(--el-color-primary-dark-2);
+  --el-button-active-border-color: var(--el-color-primary-dark-2);
+  --el-button-disabled-text-color: var(--el-color-white);
+  --el-button-disabled-bg-color: var(--el-color-primary-light-5);
+  --el-button-disabled-border-color: var(--el-color-primary-light-5);
 }
 .my-button--primary.plain {
   color: #409eff;

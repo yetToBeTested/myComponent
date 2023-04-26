@@ -15,8 +15,8 @@ declare module '@vue/runtime-core' {
     ElOption: typeof import('element-plus/es')['ElOption']
     ElSelect: typeof import('element-plus/es')['ElSelect']
     MyButton: typeof import('./src/components/myButton/myButton.vue')['default']
+    MyInput: typeof import('./src/components/myInput/MyInput.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
-    SearcherBar: typeof import('./src/components/myInput/SearcherBar.vue')['default']
   }
 }
