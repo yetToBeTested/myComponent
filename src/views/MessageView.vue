@@ -4,14 +4,15 @@
     <span><button @click="fn('success')">success</button></span>
     <span><button @click="fn1('error')">error</button></span>
     <span><button @click="fn('warning')">warning</button></span>
-    <span><button @click="fn('loading')">loading</button></span>
+    <span><button @click="fn2('loading')">loading</button></span>
   </div>
 </template>
 
 <script setup lang="ts">
 import Message from '@/components/myMessage'
-import '../components/myMessage/src/Message.scss'
 import 'remixicon/fonts/remixicon.css'
+import '../components/myMessage/src/Message.scss'
+
 const fn = (arr: string) => {
   Message[arr](`this is a ${arr}`)
 }
@@ -19,7 +20,14 @@ const fn1 = (arr: string) => {
   Message.error({
     content: `this is a ${arr}`,
     duration: 3000,
-    close: true
+    closeable: true
+  })
+}
+const fn2 = (arr: string) => {
+  Message.loading({
+    content: `this is a ${arr}`,
+    duration: 3000,
+    closeable: true
   })
 }
 </script>
