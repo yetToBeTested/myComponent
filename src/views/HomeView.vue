@@ -1,13 +1,38 @@
 <template>
   <div class="home">
-    <h2>home</h2>
+    <router-link to="/button"> button</router-link>
+    <router-link to="/input"> input</router-link>
+    <router-link to="/message"> message</router-link>
+  </div>
+  <div class="main">
+    <router-view></router-view>
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { RouterView, RouterLink } from 'vue-router'
+</script>
 
 <style scoped lang="less">
+@homeHeight: 30px;
 .home {
-  color: red;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #333333;
+  height: @homeHeight;
+
+  a {
+    color: #fff;
+    flex: 1;
+    height: @homeHeight;
+    text-align: center;
+    line-height: @homeHeight;
+  }
+}
+.main {
+  margin-top: 1px;
+  background-color: #333333;
+  height: 100vh;
 }
 </style>

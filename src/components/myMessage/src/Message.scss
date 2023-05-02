@@ -1,0 +1,165 @@
+$message-cls: bp-message;
+
+//  主色
+$primary-6: #1677ff;
+// 成功色
+$success-6: #52c41a;
+// 警告色
+$warning-6: #fa8c16;
+// 危险色
+$danger-6: #f5222d;
+// 中性色
+$gary-1: #ffffff;
+$gary-4: #f0f0f0;
+$gary-7: #8c8c8c;
+$gary-8: #595959;
+$gary-10: #262626;
+// $type:{
+//   success{background-color:$success-6},
+
+// }
+@function type($n) {
+  @if ($n == 'success') {
+    @return $success-6;
+  }
+}
+.bp-mask-message {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  z-index: 999;
+}
+
+.#{$message-cls}-list {
+  position: relative;
+  top: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: nowrap;
+
+  .#{$message-cls} {
+    min-width: 80px;
+    width: max-content;
+    height: 46px;
+    border-radius: 6px;
+    background: $gary-1;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    padding: 0 14px;
+    border: 1px solid $gary-4;
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 14px;
+    line-height: 1;
+    text-align: center;
+    list-style: none;
+    overflow: hidden;
+    // .no-select: {
+    // }
+    // &.#{$message-cls}-success {
+    //   background: $success-6;
+
+    // }
+    // &.#{$message-cls}-text {
+    //   background: $primary-6;
+
+    // }
+    // &.#{$message-cls}-error {
+    //   background: $danger-6;
+    // }
+    // &.#{$message-cls}-warning {
+    //   background: $danger-6;
+    //   color: $success-6;
+    // }
+    // &.#{$message-cls}-loading {
+    //   background: $primary-6;
+    // }
+
+    &-icon {
+      font-size: 18px;
+      margin-right: 6px;
+
+      .ri-checkbox-circle-fill {
+        color: $success-6;
+      }
+
+      .ri-close-circle-fill {
+        color: $danger-6;
+      }
+
+      .ri-error-warning-fill {
+        color: $warning-6;
+      }
+
+      .ri-loader-5-line {
+        display: inline-block;
+        color: $primary-6;
+        animation: rotating 0.8s linear infinite;
+        -webkit-animation: rotating 0.8s linear infinite;
+      }
+    }
+
+    &-content {
+      font-size: 14px;
+      font-weight: normal;
+      color: $gary-10;
+    }
+
+    &-close {
+      margin-left: 6px;
+
+      .ri-close-line {
+        color: $gary-7;
+        cursor: pointer;
+        transition: all 0.2s ease;
+
+        &::before {
+          padding: 2px;
+          border-radius: 10px;
+          transition: all 0.2s ease;
+        }
+
+        &:hover {
+          color: $gary-8;
+
+          &::before {
+            background-color: $gary-4;
+            transition: all 0.2s ease;
+          }
+        }
+      }
+    }
+  }
+}
+
+@keyframes rotating {
+  from {
+    transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+    -webkit-transform: rotate(365deg);
+  }
+}
+
+.fademsg-move,
+.fademsg-enter-active,
+.fademsg-leave-active {
+  transition: all 0.2s cubic-bezier(0, 0, 1, 1);
+}
+.fademsg-enter-from,
+.fademsg-leave-to {
+  opacity: 0;
+}
+.fademsg-leave-active {
+  position: absolute;
+}

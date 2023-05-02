@@ -7,9 +7,22 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: HomeView
+      component: HomeView,
+      children: [
+        {
+          path: '/button',
+          component: () => import('../views/ButtonView.vue')
+        },
+        {
+          path: '/input',
+          component: () => import('../views/InputView.vue')
+        },
+        {
+          path: '/message',
+          component: () => import('../views/MessageView.vue')
+        }
+      ]
     }
-   
   ]
 })
 
