@@ -18,10 +18,21 @@
 
 <script setup lang="ts">
 import { Search } from '@element-plus/icons-vue'
-import { computed } from 'vue'
+import { computed, type PropType } from 'vue'
+
+interface searchData {
+  keyword: ''
+  placeholder: '请输入你想要查询的关键字'
+  options: [
+    { label: '视频'; value: 'video' },
+    { label: '文章'; value: 'article' },
+    { label: '用户'; value: 'user' }
+  ]
+  selectedValue: 'video'
+}
 const props = defineProps({
   modelValue: {
-    type: Object,
+    type: Object as PropType<searchData>,
     required: true
   }
 })

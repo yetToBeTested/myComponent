@@ -1,6 +1,6 @@
 import { createVNode, reactive, ref, render } from 'vue'
 import type { AppContext, Ref } from 'vue'
-import Message from './messageList.vue'
+import MessageList from './MessageList.vue'
 import type { MessageConfig, MessageItem } from './type'
 
 class MessageManager {
@@ -14,10 +14,11 @@ class MessageManager {
     mask.setAttribute('class', `bp-mask-message`)
     this.container = mask
 
-    const vm = createVNode(Message, {
+    const vm = createVNode(MessageList, {
       list: this.messageList.value,
       onClose: this.remove
     })
+    // console.log(vm)
 
     if (appContext) {
       vm.appContext = appContext

@@ -1,11 +1,12 @@
-import type { App, AppContext } from 'vue'
-import _message from './src/messageList.vue'
+import type { AppContext } from 'vue'
+import _message from './src/MessageList.vue'
 import { getComponentsPrefix } from './utils/config'
 import MessageManager from './src/Instance'
 import type { MessageConfig, MessageType } from './src/type'
 import { isString } from './utils/util'
 
 _message.name = getComponentsPrefix() + _message.name
+// console.log(_message.name)
 
 let msg: MessageManager
 const types = ['text', 'success', 'warning', 'error', 'loading'] as const
@@ -25,12 +26,13 @@ const message = types.reduce((pre, value) => {
   }
   return pre
 }, {} as any)
-
+console.log(message)
 const Message = Object.assign({
-  ...message,
-  install: (app: App) => {
-    app.component(_message.name, _message)
-  }
+  ...message
+  // install: (app: App) => {
+  //   console.log('zhix')
+  //   app.component(_message.name, _message)
+  // }
 })
 
 export default Message

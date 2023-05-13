@@ -18,11 +18,11 @@ import type { PropType } from 'vue'
 import type { MessageItem } from './type'
 import message from './Message.vue'
 
-const props = defineProps({
+defineProps({
   list: { type: Array as PropType<MessageItem[]>, default: () => [] }
 })
 
-console.log(props)
+// console.log(props)
 
 const emits = defineEmits<{
   (e: 'close', id: string | number): void

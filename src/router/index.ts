@@ -20,6 +20,10 @@ const router = createRouter({
         {
           path: '/message',
           component: () => import('../views/MessageView.vue')
+        },
+        {
+          path: '/test',
+          component: () => import('../views/TestView.vue')
         }
       ]
     }
