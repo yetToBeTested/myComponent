@@ -19,14 +19,17 @@ const message = types.reduce((pre, value) => {
     }
 
     const _config: MessageConfig = { type: value as MessageType, ...(config as MessageConfig) }
+
     if (!msg) {
       msg = new MessageManager(appContext)
     }
-    return msg!.add(_config as MessageConfig)
+    const res = msg!.add(_config as MessageConfig)
+
+    return res
   }
   return pre
 }, {} as any)
-console.log(message)
+console.log(message, message.text, 'mes')
 const Message = Object.assign({
   ...message
   // install: (app: App) => {

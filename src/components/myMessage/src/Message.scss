@@ -139,23 +139,23 @@ $gary-10: #262626;
   }
 }
 
-@keyframes rotating {
-  from {
-    transform: rotate(0deg);
-    -webkit-transform: rotate(0deg);
-  }
+// @keyframes rotating {
+//   from {
+//     transform: rotate(0deg);
+//     -webkit-transform: rotate(0deg);
+//   }
 
-  to {
-    transform: rotate(360deg);
-    -webkit-transform: rotate(365deg);
-  }
-}
+//   to {
+//     transform: rotate(360deg);
+//     -webkit-transform: rotate(365deg);
+//   }
+// }
 
-.fademsg-move,
-.fademsg-enter-active,
-.fademsg-leave-active {
-  transition: all 0.2s cubic-bezier(0, 0, 1, 1);
-}
+// .fademsg-move,
+// .fademsg-enter-active,
+// .fademsg-leave-active {
+//   // transition: all 0.2s cubic-bezier(0, 0, 1, 1);
+// }
 .fademsg-enter-from,
 .fademsg-leave-to {
   opacity: 0;

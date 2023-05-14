@@ -3,6 +3,7 @@
     <router-link to="/button"> button</router-link>
     <router-link to="/input"> input</router-link>
     <router-link to="/message"> message</router-link>
+    <router-link to="/confirm"> confirm</router-link>
     <router-link to="/test"> test</router-link>
   </div>
   <div class="main">

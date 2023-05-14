@@ -6,7 +6,7 @@ import type { MessageConfig, MessageItem } from './type'
 class MessageManager {
   private container: HTMLElement | null
   private readonly messageList: Ref<MessageItem[]>
-
+  private vm: any
   constructor(appContext?: AppContext) {
     this.messageList = ref([])
 
@@ -14,17 +14,15 @@ class MessageManager {
     mask.setAttribute('class', `bp-mask-message`)
     this.container = mask
 
-    const vm = createVNode(MessageList, {
+    this.vm = createVNode(MessageList, {
       list: this.messageList.value,
-      onClose: this.remove
+      onAlose: this.remove
     })
-    // console.log(vm)
-
     if (appContext) {
-      vm.appContext = appContext
+      this.vm.appContext = appContext
     }
-    render(vm, this.container)
-    document.body.appendChild(this.container)
+    // render(vm, this.container)
+    // document.body.appendChild(this.container)
   }
 
   /**
@@ -33,6 +31,10 @@ class MessageManager {
    * @returns
    */
   add = (config: MessageConfig) => {
+    if (this.messageList.value.length === 0) {
+      render(this.vm, this.container as HTMLElement)
+      document.body.appendChild(this.container as HTMLElement)
+    }
     const id = config.id ?? `_bp_message_${Math.random().toString()}`
 
     const message: MessageItem = reactive({ id, ...config })
@@ -62,10 +64,18 @@ class MessageManager {
         break
       }
     }
+    if (this.messageList.value.length === 0) {
+      render(null, this.container as HTMLElement)
+      this.container?.remove()
+    }
   }
 
   clear = () => {
     this.messageList.value = []
+  }
+
+  removeDom = () => {
+    return this.messageList.value.length === 0 ? true : false
   }
 }
 

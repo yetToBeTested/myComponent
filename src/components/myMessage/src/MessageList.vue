@@ -14,6 +14,7 @@
 </template>
 
 <script setup lang="ts">
+// import { onUnmounted } from 'vue'
 import type { PropType } from 'vue'
 import type { MessageItem } from './type'
 import message from './Message.vue'
@@ -25,10 +26,14 @@ defineProps({
 // console.log(props)
 
 const emits = defineEmits<{
-  (e: 'close', id: string | number): void
+  (e: 'alose', id: string | number): void
 }>()
 
-const onClose = (id: string | number) => emits('close', id)
+const onClose = (id: string | number) => emits('alose', id)
+
+// onUnmounted(() => {
+//   console.log('beixie')
+// })
 </script>
 
 <!-- <style scoped lang="less">
